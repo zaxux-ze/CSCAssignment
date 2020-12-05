@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <defs>
+    <clipPath id="clip-Task_1_Diagram">
+      <rect width="1920" height="1080"/>
+    </clipPath>
+  </defs>
+  <g id="Task_1_Diagram" data-name="Task 1 Diagram" clip-path="url(#clip-Task_1_Diagram)">
+    <rect width="1920" height="1080" fill="#fff"/>
+    <g id="Group_12" data-name="Group 12" transform="translate(-27)">
+      <g id="Rectangle_1" data-name="Rectangle 1" transform="translate(302 140)" fill="#fff" stroke="#707070" stroke-width="1">
+        <rect width="250" height="100" stroke="none"/>
+        <rect x="0.5" y="0.5" width="249" height="99" fill="none"/>
+      </g>
+      <g id="Rectangle_2" data-name="Rectangle 2" transform="translate(227 290)" fill="#dedede" stroke="#707070" stroke-width="1">
+        <rect width="400" height="510" stroke="none"/>
+        <rect x="0.5" y="0.5" width="399" height="509" fill="none"/>
+      </g>
+      <g id="Rectangle_3" data-name="Rectangle 3" transform="translate(302 335)" fill="#fff" stroke="#707070" stroke-width="1">
+        <rect width="250" height="100" stroke="none"/>
+        <rect x="0.5" y="0.5" width="249" height="99" fill="none"/>
+      </g>
+      <g id="Rectangle_4" data-name="Rectangle 4" transform="translate(302 495)" fill="#fff" stroke="#707070" stroke-width="1">
+        <rect width="250" height="100" stroke="none"/>
+        <rect x="0.5" y="0.5" width="249" height="99" fill="none"/>
+      </g>
+      <g id="Rectangle_5" data-name="Rectangle 5" transform="translate(302 655)" fill="#fff" stroke="#707070" stroke-width="1">
+        <rect width="250" height="100" stroke="none"/>
+        <rect x="0.5" y="0.5" width="249" height="99" fill="none"/>
+      </g>
+      <g id="Rectangle_6" data-name="Rectangle 6" transform="translate(302 850)" fill="#fff" stroke="#707070" stroke-width="1">
+        <rect width="250" height="100" stroke="none"/>
+        <rect x="0.5" y="0.5" width="249" height="99" fill="none"/>
+      </g>
+      <text id="Web_Application" data-name="Web Application" transform="translate(336 201)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Web Application</tspan></text>
+      <text id="Web_Service" data-name="Web Service" transform="translate(639 556)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Web Service</tspan></text>
+      <text id="Web_Api_Controller" data-name="Web Api Controller" transform="translate(322 396)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Web Api Controller</tspan></text>
+      <text id="Data_Access_Repository" data-name="Data Access 
+Repository" transform="translate(358 672)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="-65.9" y="27">Data Access </tspan><tspan x="-58.606" y="60">Repository</tspan></text>
+      <text id="Entity_Framework" data-name="Entity Framework" transform="translate(332 556)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Entity Framework</tspan></text>
+      <text id="Database" transform="translate(376 911)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Database</tspan></text>
+      <g id="Group_1" data-name="Group 1">
+        <rect id="Rectangle_7" data-name="Rectangle 7" width="3" height="42" transform="translate(426 239)"/>
+        <path id="Polygon_1" data-name="Polygon 1" d="M6.5,0,13,10H0Z" transform="translate(434 290) rotate(180)"/>
+      </g>
+      <g id="Group_6" data-name="Group 6" transform="translate(421 800)">
+        <rect id="Rectangle_7-2" data-name="Rectangle 7" width="3" height="42" transform="translate(5 9)"/>
+        <path id="Polygon_1-2" data-name="Polygon 1" d="M6.5,0,13,10H0Z"/>
+      </g>
+      <g id="Group_2" data-name="Group 2" transform="translate(0 205)">
+        <rect id="Rectangle_7-3" data-name="Rectangle 7" width="3" height="42" transform="translate(426 239)"/>
+        <path id="Polygon_1-3" data-name="Polygon 1" d="M6.5,0,13,10H0Z" transform="translate(434 290) rotate(180)"/>
+      </g>
+      <g id="Group_3" data-name="Group 3" transform="translate(421 435)">
+        <rect id="Rectangle_7-4" data-name="Rectangle 7" width="3" height="42" transform="translate(5 9)"/>
+        <path id="Polygon_1-4" data-name="Polygon 1" d="M6.5,0,13,10H0Z"/>
+      </g>
+      <g id="Group_4" data-name="Group 4" transform="translate(0 365)">
+        <rect id="Rectangle_7-5" data-name="Rectangle 7" width="3" height="42" transform="translate(426 239)"/>
+        <path id="Polygon_1-5" data-name="Polygon 1" d="M6.5,0,13,10H0Z" transform="translate(434 290) rotate(180)"/>
+      </g>
+      <g id="Group_5" data-name="Group 5" transform="translate(421 595)">
+        <rect id="Rectangle_7-6" data-name="Rectangle 7" width="3" height="42" transform="translate(5 9)"/>
+        <path id="Polygon_1-6" data-name="Polygon 1" d="M6.5,0,13,10H0Z"/>
+      </g>
+    </g>
+    <g id="Group_13" data-name="Group 13" transform="translate(83)">
+      <text id="Display_data" data-name="Display data" transform="translate(1195 374)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Display data</tspan></text>
+      <text id="Invoke_Action" data-name="Invoke
+Action" transform="translate(1549 362)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Invoke</tspan><tspan x="0" y="33">Action</tspan></text>
+      <text id="HTTP_Request" data-name="HTTPRequest" transform="translate(1549 717)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">HTTP</tspan><tspan x="0" y="33">Request</tspan></text>
+      <text id="Returns_Data" data-name="ReturnsData" transform="translate(1288 717)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="-41.681" y="0">Returns</tspan><tspan x="-25.72" y="33">Data</tspan></text>
+      <g id="Group_9" data-name="Group 9">
+        <g id="Rectangle_10" data-name="Rectangle 10" transform="translate(1315 140)" fill="#fff" stroke="#707070" stroke-width="1">
+          <rect width="250" height="100" stroke="none"/>
+          <rect x="0.5" y="0.5" width="249" height="99" fill="none"/>
+        </g>
+        <text id="Web_Application-2" data-name="Web Application" transform="translate(1349 201)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">Web Application</tspan></text>
+      </g>
+      <g id="Group_8" data-name="Group 8">
+        <g id="Rectangle_8" data-name="Rectangle 8" transform="translate(1315 850)" fill="#fff" stroke="#707070" stroke-width="1">
+          <rect width="250" height="100" stroke="none"/>
+          <rect x="0.5" y="0.5" width="249" height="99" fill="none"/>
+        </g>
+        <text id="Web_Service-2" data-name="Web Service" transform="translate(1440 911)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="-67.346" y="0">Web Service</tspan></text>
+      </g>
+      <g id="Group_7" data-name="Group 7">
+        <g id="Rectangle_9" data-name="Rectangle 9" transform="translate(1315 495)" fill="#fff" stroke="#707070" stroke-width="1">
+          <rect width="250" height="100" stroke="none"/>
+          <rect x="0.5" y="0.5" width="249" height="99" fill="none"/>
+        </g>
+        <text id="AJAX_Call" data-name="AJAX Call" transform="translate(1388 556)" fill="#707070" font-size="25" font-family="SegoeUI, Segoe UI"><tspan x="0" y="0">AJAX Call</tspan></text>
+      </g>
+      <rect id="Rectangle_7-7" data-name="Rectangle 7" width="3" height="247" transform="translate(1517 240)"/>
+      <path id="Polygon_1-7" data-name="Polygon 1" d="M6.5,0,13,10H0Z" transform="translate(1525 495) rotate(180)"/>
+      <g id="Group_11" data-name="Group 11">
+        <rect id="Rectangle_7-8" data-name="Rectangle 7" width="3" height="247" transform="translate(1360 248)"/>
+        <path id="Polygon_1-8" data-name="Polygon 1" d="M6.5,0,13,10H0Z" transform="translate(1355 240)"/>
+      </g>
+      <g id="Group_10" data-name="Group 10">
+        <rect id="Rectangle_7-9" data-name="Rectangle 7" width="3" height="247" transform="translate(1517 595)"/>
+        <path id="Polygon_1-9" data-name="Polygon 1" d="M6.5,0,13,10H0Z" transform="translate(1525 850) rotate(180)"/>
+      </g>
+      <rect id="Rectangle_7-10" data-name="Rectangle 7" width="3" height="247" transform="translate(1360 603)"/>
+      <path id="Polygon_1-10" data-name="Polygon 1" d="M6.5,0,13,10H0Z" transform="translate(1355 595)"/>
+    </g>
+    <text id="C_" data-name="C#" transform="translate(86 115)" font-size="60" font-family="SegoeUI, Segoe UI"><tspan x="-36.299" y="0">C#</tspan></text>
+    <text id="JQuery" transform="translate(1137 115)" font-size="60" font-family="SegoeUI, Segoe UI"><tspan x="-90.938" y="0">JQuery</tspan></text>
+  </g>
+</svg>
