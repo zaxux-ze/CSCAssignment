@@ -1,0 +1,60 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+
+        jQuery(function ($) {
+
+            function getWeather() {
+                $.ajax({
+                    url: 'https://api.data.gov.sg/v1/environment/2-hour-weather-forecast',
+                    method: 'GET',
+                    dataType: 'application/json',
+                }).done(function (data) {
+                    console.log(data)
+                });
+            }
+
+            $('a.get_weather').click(function (e) {
+                e.preventDefault();
+                $(this).hide();
+                getWeather();
+                $('#result').fadeIn(1000);
+            });
+
+            $('a.hide').click(function (e) {
+                e.preventDefault();
+                $('#result').hide();
+                $('a.get_weather').show();
+            })
+
+        })
+
+    </script>
+
+    <header class="seats-header">
+        <h1>Weather</h1>
+    </header>
+
+    <div><a href="#" class="get_weather">Get weather</a></div>
+    <div id="result" style="display: none">
+        <div id="icon"></div>
+        <div id="city"><strong></strong></div>
+        <div id="weather"></div>
+        <div id="time"></div>
+        <div>
+            <a href="#" class="hide">Hide</a>
+        </div>
+
+</body>
+</html>
