@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.1300
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task1_CSCAssignment", "Task1_CSCAssignment\Task1_CSCAssignment.csproj", "{3F2A9FB7-AF21-48B8-A238-86745E5B8770}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{71ABF301-9AD0-4928-B5BD-C8A5BDCC89FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{71ABF301-9AD0-4928-B5BD-C8A5BDCC89FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

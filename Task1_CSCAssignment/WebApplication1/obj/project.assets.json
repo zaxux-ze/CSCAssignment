@@ -11800,11 +11800,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\SP\\CSC_Assignment\\CSCAssignment\\Task1_CSCAssignment\\WebApplication1\\WebApplication1.csproj",
+      "projectUniqueName": "D:\\SP\\CSC\\Task1_CSCAssignment\\WebApplication1\\WebApplication1.csproj",
       "projectName": "WebApplication1",
-      "projectPath": "D:\\SP\\CSC_Assignment\\CSCAssignment\\Task1_CSCAssignment\\WebApplication1\\WebApplication1.csproj",
+      "projectPath": "D:\\SP\\CSC\\Task1_CSCAssignment\\WebApplication1\\WebApplication1.csproj",
       "packagesPath": "C:\\Users\\xzaxu\\.nuget\\packages\\",
-      "outputPath": "D:\\SP\\CSC_Assignment\\CSCAssignment\\Task1_CSCAssignment\\WebApplication1\\obj\\",
+      "outputPath": "D:\\SP\\CSC\\Task1_CSCAssignment\\WebApplication1\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
