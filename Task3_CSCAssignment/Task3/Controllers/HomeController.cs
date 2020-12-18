@@ -14,5 +14,12 @@ namespace Task3.Controllers
 
             return View();
         }
+
+        public ActionResult Register()
+        {
+            ViewBag.Title = "Register Page";
+
+            return View();
+        }
     }
 }

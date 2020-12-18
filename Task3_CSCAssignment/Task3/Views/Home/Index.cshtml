@@ -1,5 +1,13 @@
 ﻿@section Scripts {
     @Scripts.Render("~/bundles/app")
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfzfAQaAAAAAG1aYoqYh64VaUmAPMSwzU8WDYWa"></script>
+    <script>
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LfzfAQaAAAAAG1aYoqYh64VaUmAPMSwzU8WDYWa', { action: 'register' }).then(function (token) {
+                document.getElementById("foo").value = token;
+            });
+        });
+    </script>
 }
 
 <div class="row">
@@ -40,13 +48,14 @@
             </div>
             <div class="form-group">
                 <button type="submit" class="btn btn-default">Register</button>
+                <input type="hidden" id="foo" name="foo" />
             </div>
         </form>
     </div>
 
     <div class="col-sm-4">
         <h3>Log In</h3>
-        <form data-bind="submit: login">
+        <form id='demo-form' data-bind="submit: login">
             <div class="form-group">
                 <label>Email</label>
                 <input class="form-control" type="text" data-bind="value: loginEmail" />
