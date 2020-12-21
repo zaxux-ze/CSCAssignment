@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div class="row">
+        <div class="col-sm-4">
+            <form id="dataForm">
+                <h3>Upload Image into AWS S3</h3>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-default" id="uploadButton">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+
+            $('#uploadButton').on('click', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: 'http://localhost:54115/api/talents/uploadImage'
+                }).done(function (data, textStatus, jqXHR) {
+                    console.log(data);
+                })
+            })
+        })
+
+    </script>
+}
