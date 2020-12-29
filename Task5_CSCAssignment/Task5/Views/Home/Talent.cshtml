@@ -25,128 +25,104 @@
             var keyNameDict = [];
             var keyNameLink = [];
             var talentData = [];
-            var count = 0;
             var inddata;
+
+            getTalentData();
+            getBucketDataAndShortenLink();
 
             function KeyData(inKey, inKeyName) {
                 this.KeyName = inKeyName;
                 this.Key = inKey;
             }
 
+            function getTalentData()
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/talents/'
+                }).done(function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var list = [];
+                        list.push(data[i].Name);
+                        var indData = list.join(', ');
+                        var firstPartOfName = indData.substr(0, indData.indexOf(' '));
+                        talentData.push(firstPartOfName);
+                    }
+                })
+            }
 
-            $.ajax({
-                type: 'GET',
-                url: '/api/talents/'
-            }).done(function (data, textStatus, jqXHR) {
-                for (var i = 0; i < data.length; i++)
-                {
-                    var list = [];
-                    list.push(data[i].Name);
-                    var indData = list.join(', ');
-                    //console.log(indData);
-                    var firstPartOfName = indData.substr(0, indData.indexOf(' '));
-                    talentData.push(firstPartOfName);
-                }
-                //console.log(talentData);
+            function getBucketDataAndShortenLink()
+            {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/talents/getBucketObject'
+                }).done(function (data, textStatus, jqXHR) {
 
-            })
+                    for (var index = 0; index < data.length; index++) {
+                        var keyName = data[index];
 
-            $.ajax({
-                type: 'GET',
-                url: '/api/talents/getBucketObject'
-                //contentType: 'application/x-www-form-urlencoded',
-                //data: linkData
-            }).done(function (data, textStatus, jqXHR) {
-                //console.log(data.length);
+                        for (var a = 0; a < talentData.length; a++) {
+                            var individualData = talentData[a];
 
-                for (var index = 0; index < data.length; index++) {
-                    //keyArr.push(data[index]);
-                    var keyName = data[index];
-                    
-                    //console.log(keyNameData);
-                    for (var a = 0; a < talentData.length; a++)
-                    {
-                        var individualData = talentData[a];
+                            if (keyName.indexOf(individualData) !== -1) {
+                                keyNameDict.push({
+                                    key: individualData,
+                                    value: keyName
+                                });
+    
+                                break;
 
-                        if (keyName.indexOf(individualData) !== -1) {
-                            
-                   
-                            keyNameDict.push({
-                                key: individualData,
-                                value: keyName
-                            });
-                            
-                            break;
-                            
-                        }
-                        else
-                        {
-                            continue;
+                            }
+                            else {
+                                continue;
+                            }
                         }
                     }
-                   
-                }
-                for (var c = 0; c < keyNameDict.length; c++)
-                {
-                    inddata = keyNameDict[c];
+                    for (var c = 0; c < keyNameDict.length; c++) {
+                        inddata = keyNameDict[c];
 
-                    let keyNameData = new KeyData(inddata.key, inddata.value);
-                    //console.log(keyNameData);
-                    $.ajax({
-                        type: 'POST',
-                        url: '/api/talents/shortenLink',
-                        contentType: 'application/x-www-form-urlencoded',
-                        data: keyNameData
-                    }).done(function (data, textStatus, jqXHR) {
-                        //console.log(data);
-                        keyNameLink.push({
-                            key: data.keyName,
-                            value: data.link
-                        });
-                    })
-                   
-                }
-                
-            })
-            //console.log(keyNameDict);
-            
-            //console.log(keyNameLink);
+                        let keyNameData = new KeyData(inddata.key, inddata.value);
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/talents/shortenLink',
+                            contentType: 'application/x-www-form-urlencoded',
+                            data: keyNameData
+                        }).done(function (data) {
+                            keyNameLink.push({
+                                key: data.keyName,
+                                value: data.link
+                            });
+                        })
+
+                    }
+
+                })
+            }
+
 
             $('#search').keyup(function () {
-                //var link = "https://zes3.s3-ap-southeast-1.amazonaws.com/all_images/";
-                //let linkData = new LinkData(link);
-                var urlForJson = "http://localhost:54115/api/talents";
-
-                //Url for the Cloud image hosting
-                //var urlForCloudImage = link;
-                //console.log(urlForCloudImage);
+                var urlForJson = "https://localhost:44367/api/talents";
 
                 var searchField = $('#search').val();
                 var myExp = new RegExp(searchField, "i");
                 $.getJSON(urlForJson, function (data) {
                     var output = '<ul class="searchresults">';
                     $.each(data, function (key, val) {
-                        //for debug
-                        //console.log(data);
+
                         if ((val.Name.search(myExp) != -1) ||
                             (val.Bio.search(myExp) != -1)) {
                             output += '<li>';
                             output += '<h2>' + val.Name + '</h2>';
-                            //get the absolute path for local image
-                            //output += '<img src="images/'+ val.ShortName +'_tn.jpg" alt="'+ val.Name +'" />';
-                            //console.log("hi");
-                            //console.log(keyNameLink);
+
                             for (var d = 0; d < keyNameLink.length; d++)
                             {
                                 
                                 inddata = keyNameLink[d];
                                 var name = inddata.key;
                                 var searchName = val.Name;
-                                //console.log(name);
-                                //console.log(searchName);
-                                //console.log(searchName.indexOf(name) !== -1)
+
                                 if (searchName.indexOf(name) !== -1) {
-                                    //get the image from cloud hosting
                                     output += '<img src=' + inddata.value + " alt=" + val.Name + '" />';
                                     output += '<p>' + val.Bio + '</p>';
                                     output += '</li>';
@@ -160,9 +136,6 @@
                     output += '</ul>';
                     $('#update').html(output);
                 }); //get JSON
-
-
-
             });
 
         })

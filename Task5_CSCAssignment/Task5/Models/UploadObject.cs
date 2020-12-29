@@ -6,8 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
+using System.Web.Http;
 
 namespace Task5.Models
 {
@@ -19,31 +22,11 @@ namespace Task5.Models
 
         public void UploadFile()
         {
-            //string[] files = Directory.GetFiles(filePath);
-            //var client = new AmazonS3Client(Amazon.RegionEndpoint.APSoutheast1);
-            //foreach (string path in files)
-            //{
             try
             {
                 TransferUtility directoryTransferUtility =
                     new TransferUtility(new AmazonS3Client(Amazon.RegionEndpoint.APSoutheast1));
 
-                //// 1. Upload a directory.
-                //directoryTransferUtility.UploadDirectory(filePath,
-                //                                         bucketName);
-                //Console.WriteLine("Upload statement 1 completed");
-
-                //// 2. Upload only the .txt files from a directory. 
-                ////    Also, search recursively. 
-                //directoryTransferUtility.UploadDirectory(
-                //                               filePath,
-                //                               bucketName,
-                //                               "*.jpg",
-                //                               SearchOption.AllDirectories);
-                //Console.WriteLine("Upload statement 2 completed");
-
-                // 3. Same as 2 and some optional configuration 
-                //    Search recursively for .txt files to upload).
                 TransferUtilityUploadDirectoryRequest request =
                     new TransferUtilityUploadDirectoryRequest
                     {
