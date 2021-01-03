@@ -1,6 +1,8 @@
 ﻿using Amazon;
 using Amazon.S3;
+using Amazon.S3.Model;
 using Amazon.S3.Transfer;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,6 +10,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -16,13 +20,13 @@ namespace Task5.Controllers
 {
     public class UploadFileController : ApiController
     {
-        private const string bucketName = "zes3";
+        private const string bucketName = "zes3version2";
         private static readonly RegionEndpoint bucketRegion = RegionEndpoint.APSoutheast1;
         private static IAmazonS3 s3Client;
 
         [HttpPost]
-        [Route("api/uploadFileToS3")]
-        public async Task<HttpResponseMessage> PostFormData()
+        [Route("api/v1/uploadFileToS3")]
+        public async Task<HttpResponseMessage> UploadFileToS3()
         {
             // Check if the request contains multipart/form-data.
             if (!Request.Content.IsMimeMultipartContent())
@@ -34,14 +38,21 @@ namespace Task5.Controllers
 
             try
             {
-                Guid guid = new Guid();
-                string fileName = guid.ToString();
+                s3Client = new AmazonS3Client(bucketRegion);
+                string fileName = "";
 
                 var fileTransferUtility =
                     new TransferUtility(s3Client);
 
-                // Read the form data.
-                await Request.Content.ReadAsMultipartAsync(provider);
+                await Request.Content.ReadAsMultipartAsync(provider).ContinueWith(o =>
+                {
+                    var fileContent = provider.Contents.SingleOrDefault();
+
+                    if (fileContent != null)
+                    {
+                        fileName = fileContent.Headers.ContentDisposition.FileName.Replace("\"", string.Empty);
+                    }
+                });
 
                 byte[] file = await provider.Contents[0].ReadAsByteArrayAsync();
 
@@ -51,11 +62,47 @@ namespace Task5.Controllers
 
                 string objectUrl = String.Format("https://{0}.s3.{1}.amazonaws.com/{2}", bucketName, bucketRegion.SystemName, fileName);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { url = objectUrl });
+                var shortenUrlLink = await ShortenUrl(objectUrl);
+
+                return Request.CreateResponse(HttpStatusCode.OK, new { url = shortenUrlLink });
             }
             catch (System.Exception e)
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
+            }
+        }
+
+
+        public async Task<object> ShortenUrl(string url)
+        {
+            string _bitlyToken = "XXXX";
+            HttpClient client = new HttpClient();
+
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post,
+                "https://api-ssl.bitly.com/v4/shorten")
+            {
+                Content = new StringContent($"{{\"long_url\":\"{url}\"}}",
+                                                Encoding.UTF8,
+                                                "application/json")
+            };
+
+            try
+            {
+                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", _bitlyToken);
+
+                var response = await client.SendAsync(request).ConfigureAwait(false);
+
+                if (!response.IsSuccessStatusCode)
+                    return string.Empty;
+
+                var responsestr = await response.Content.ReadAsStringAsync();
+
+                dynamic jsonResponse = JsonConvert.DeserializeObject<dynamic>(responsestr);
+                return jsonResponse["link"];
+            }
+            catch (Exception ex)
+            {
+                return string.Empty;
             }
         }
     }

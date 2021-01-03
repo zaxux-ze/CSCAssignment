@@ -11,7 +11,13 @@
             <form id="dataForm">
                 <h3>Upload Image into AWS S3</h3>
                 <div class="form-group">
+                    <label>Upload your Image</label>
+                    <input class="form-control" type="file" id="fileInput" />
+                </div>
+                <div class="form-group">
                     <button type="submit" class="btn btn-default" id="uploadButton">Upload</button>
+                </div>
+                <div class="form-group" id="urlLink">
                 </div>
             </form>
         </div>
@@ -24,16 +30,28 @@
     <script>
         $(document).ready(function () {
 
+
             $('#uploadButton').on('click', function (e) {
                 e.preventDefault();
+
+                var fileInput = document.getElementById("fileInput").files[0];
+
+                var formToPost = new FormData();
+                formToPost.append("fileUpload", fileInput);
+
                 $.ajax({
                     type: 'POST',
-                    url: 'https://localhost:44367/api/talents/uploadImage'
-                }).done(function (data, textStatus, jqXHR) {
-                    console.log(data);
+                    url: 'https://localhost:44367/api/v1/uploadFileToS3',
+                    processData: false,
+                    contentType: false,
+                    data: formToPost
+                }).done(function (data) {
+                    var $pElement = $('<p></p>', { text: 'Link:' });
+                    var $spanElement = $('<a></a>', { href: data.url, text: data.url, target: "_blank" });
+                    $('#urlLink').append($pElement);
+                    $('#urlLink').append($spanElement);
                 })
             })
         })
-
     </script>
 }

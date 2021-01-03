@@ -19,10 +19,7 @@ namespace Task5.Controllers
     {
 
         private const string bucketName = "zes3";
-        //private const string objectKey = "all_images/Barot_Bellingham_tn.jpg";
-        // Specify how long the presigned URL lasts, in hours
         private const double timeoutDuration = 12;
-        // Specify your bucket region (an example region is shown).
         private static readonly RegionEndpoint bucketRegion = RegionEndpoint.APSoutheast1;
         private static IAmazonS3 s3Client;
 
