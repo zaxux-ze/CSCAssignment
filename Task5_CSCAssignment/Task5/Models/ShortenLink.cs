@@ -19,7 +19,7 @@ namespace Task5.Models
     {
         public async Task<string> ShortenUrl(string url)
         {
-            string _bitlyToken = "1928c1c587ff4ea77712f7936852c1ec8143b694";
+            string _bitlyToken = "XXXX";
             HttpClient client = new HttpClient();
 
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post,

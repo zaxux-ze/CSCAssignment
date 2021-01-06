@@ -19,6 +19,9 @@
                 </div>
                 <div class="form-group" id="urlLink">
                 </div>
+                <div id='loadingmessage' style='display:none'>
+                    <img src='~/img/ajax-loader.gif' />
+                </div>
             </form>
         </div>
     </div>
@@ -39,6 +42,17 @@
                 var formToPost = new FormData();
                 formToPost.append("fileUpload", fileInput);
 
+                var pElement = document.getElementById('pElement');
+                var aElement = document.getElementById('aElement');
+
+                if (pElement != null && aElement != null) {
+                    $('#urlLink').hide();
+                    $('#loadingmessage').show();
+                }
+                else {
+                    $('#loadingmessage').show();
+                }
+                
                 $.ajax({
                     type: 'POST',
                     url: 'https://localhost:44367/api/v1/uploadFileToS3',
@@ -46,11 +60,27 @@
                     contentType: false,
                     data: formToPost
                 }).done(function (data) {
-                    var $pElement = $('<p></p>', { text: 'Link:' });
-                    var $spanElement = $('<a></a>', { href: data.url, text: data.url, target: "_blank" });
-                    $('#urlLink').append($pElement);
-                    $('#urlLink').append($spanElement);
-                })
+                    $('#loadingmessage').hide();
+                    var pElement = document.getElementById('pElement');
+                    var aElement = document.getElementById('aElement');
+                    if (pElement == null && aElement == null) {
+                        var $pElement = $('<p></p>', { text: 'Link:', id: 'pElement' });
+                        var $aElement = $('<a></a>', { href: data.url, text: data.url, target: "_blank", id: 'aElement' });
+                        $('#urlLink').append($pElement);
+                        $('#urlLink').append($aElement);
+                    }
+                    else {
+                        $('#urlLink').show();
+                        $('#aElement').attr("href", data.url);
+                        $('#aElement').html(data.url);
+                    }
+                    }).fail(function (data) {
+                        $('#loadingmessage').hide();
+                        var message = data.responseJSON.Message;
+                        if (message.indexOf("error") > -1) {
+                            alert("There is some error connecting to the AWS Server. Please try again later.");
+                        }
+                    })
             })
         })
     </script>
