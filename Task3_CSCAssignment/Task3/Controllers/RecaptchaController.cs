@@ -36,7 +36,7 @@ namespace Task3.Controllers
         {
             HttpClient httpClient = new HttpClient();
 
-            var res = httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret=6LfzfAQaAAAAAESKIl9iUWklLdBiYkIx_59hcH4r&response={gRecaptchaResponse}").Result;
+            var res = httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret=XXXX&response={gRecaptchaResponse}").Result;
 
             if (res.StatusCode != HttpStatusCode.OK)
                 return false;

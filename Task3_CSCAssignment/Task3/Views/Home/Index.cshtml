@@ -1,13 +1,5 @@
 ﻿@section Scripts {
     @Scripts.Render("~/bundles/app")
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfzfAQaAAAAAG1aYoqYh64VaUmAPMSwzU8WDYWa"></script>
-    <script>
-        grecaptcha.ready(function () {
-            grecaptcha.execute('6LfzfAQaAAAAAG1aYoqYh64VaUmAPMSwzU8WDYWa', { action: 'register' }).then(function (token) {
-                document.getElementById("foo").value = token;
-            });
-        });
-    </script>
 }
 
 <div class="row">

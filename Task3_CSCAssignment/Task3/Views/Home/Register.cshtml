@@ -27,6 +27,10 @@
                 </div>
                 <input type="hidden" id="foo" name="foo" />
             </form>
+            <br/>
+            <div class="row">
+                <p id="recaptchaResult"></p>
+            </div>
         </div>
     </div>
 
@@ -35,7 +39,7 @@
 
 @section Scripts
 {
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfzfAQaAAAAAG1aYoqYh64VaUmAPMSwzU8WDYWa"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=XXXX"></script>
     <script>
         $(document).ready(function () {
             
@@ -52,7 +56,7 @@
             $('#registerButton').on('click', function (e) {
                 e.preventDefault();
                 grecaptcha.ready(function () {
-                    grecaptcha.execute('6LfzfAQaAAAAAG1aYoqYh64VaUmAPMSwzU8WDYWa', { action: 'homepage' }).then(function (token) {
+                    grecaptcha.execute('XXXX', { action: 'homepage' }).then(function (token) {
                         document.getElementById("foo").value = token;
 
                         let email = $('#emailInput').val();
@@ -63,42 +67,38 @@
                         let recaptchaData = new RecaptchaData(recaptcha);
                         let accountCredentials = new AccountCredentials(email, password, confirmPassword);
 
-                        //console.dir(recaptchaData);
-                        //console.dir(accountCredentials);
+                        let recaptchaResultElement = $('#recaptchaResult');
+
+                        if (recaptchaResultElement != null) {
+                            recaptchaResultElement.hide();
+                        }
 
                         $.ajax({
                             type: 'POST',
                             url: '/api/home/recaptcha',
                             contentType: 'application/x-www-form-urlencoded',
                             data: recaptchaData
-                        }).done(function (data, textStatus, jqXHR) {
-                            console.log(data);
-                            $.ajax({
-                                type: 'POST',
-                                url: '/api/Account/Register',
-                                contentType: 'application/json; charset=utf-8',
-                                data: JSON.stringify(accountCredentials)
-                            }).done(function (data) {
-                                $(':input', '#dataForm')
-                                    .not(':button, :submit, :reset, :hidden')
-                                    .val('')
-                            })
+                        }).done(function (data) {
+                            $('#recaptchaResult').show();
+                            $('#recaptchaResult').html(data);
+                            if (data.indexOf("passed") !== -1)
+                            {
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/api/Account/Register',
+                                    contentType: 'application/json; charset=utf-8',
+                                    data: JSON.stringify(accountCredentials)
+                                }).done(function (data) {
+                                    $(':input', '#dataForm')
+                                        .not(':button, :submit, :reset, :hidden')
+                                        .val('')
+                                })
+                            }
                         })
 
                     });
                 });
-                
-
-
             })
-
-            
-
-            
-
-            
-
-
         })
 
     </script>
