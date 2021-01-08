@@ -62,9 +62,19 @@ namespace Task5.Controllers
 
                 string objectUrl = String.Format("https://{0}.s3.{1}.amazonaws.com/{2}", bucketName, bucketRegion.SystemName, fileName);
 
-                var shortenUrlLink = await ShortenUrl(objectUrl);
+                dynamic shortenUrlLink = await ShortenUrl(objectUrl);
 
-                return Request.CreateResponse(HttpStatusCode.OK, new { url = shortenUrlLink });
+                if ((int)shortenUrlLink.statusCode == 200)
+                {
+                    return Request.CreateResponse(HttpStatusCode.OK, new { url = shortenUrlLink.urlLink, statusCode = (int)shortenUrlLink.statusCode == 200 });
+                }
+                else {
+                    HttpStatusCode statusCode = shortenUrlLink.statusCode;
+                    string message = shortenUrlLink.message;
+                    return Request.CreateResponse(statusCode, message);
+                }
+
+                
             }
             catch (System.Exception e)
             {
@@ -92,17 +102,18 @@ namespace Task5.Controllers
 
                 var response = await client.SendAsync(request).ConfigureAwait(false);
 
-                if (!response.IsSuccessStatusCode)
-                    return string.Empty;
-
+                if (!response.IsSuccessStatusCode) {
+                    return new { statusCode = response.StatusCode, message = "Unable to shorten link, please try again later." };
+                }
+                    
                 var responsestr = await response.Content.ReadAsStringAsync();
 
                 dynamic jsonResponse = JsonConvert.DeserializeObject<dynamic>(responsestr);
-                return jsonResponse["link"];
+                return new { urlLink = jsonResponse["link"], statusCode = HttpStatusCode.OK };
             }
             catch (Exception ex)
             {
-                return string.Empty;
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, ex);
             }
         }
     }

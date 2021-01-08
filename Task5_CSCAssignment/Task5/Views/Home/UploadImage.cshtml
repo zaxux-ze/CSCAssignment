@@ -76,9 +76,18 @@
                     }
                     }).fail(function (data) {
                         $('#loadingmessage').hide();
-                        var message = data.responseJSON.Message;
-                        if (message.indexOf("error") > -1) {
-                            alert("There is some error connecting to the AWS Server. Please try again later.");
+                        console.log(data);
+                        if (data.status === 403) {
+                            var message = data.promise(data).responseJSON;
+                            if (message.indexOf('shorten link') > -1) {
+                                alert(message);
+                            }
+                        }
+                        else if (data.status === 500) {
+                            var message = data.responseJSON.ExceptionMessage;
+                            if (message.indexOf("AWS") > -1) {
+                                alert("There is some error connecting to the AWS Server. Please try again later.");
+                            }
                         }
                     })
             })
