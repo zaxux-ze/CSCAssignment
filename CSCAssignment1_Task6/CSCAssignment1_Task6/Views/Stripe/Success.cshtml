@@ -1,0 +1,84 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="sr-payment-summary completed-view row">
+        <h1>Your Payment Succeeded</h1>
+        <h4>This is your Checkout response:</h4>
+    </div>
+    <div class="row">
+        <label>Click to view your invoice:</label>
+        <br />
+        <button class="btn btn-primary" id="viewInvoiceBtn">View Invoice</button>
+    </div>
+    <br />
+    <div class="row">
+        <label>Click to manage your billing:</label>
+        <br />
+        <button class="btn btn-primary" id="billingBtn">Manage Billing</button>
+    </div>
+    <br />
+    <div class="row">
+        <label>Click to go back:</label>
+        <br />
+        <button class="btn btn-primary" id="goBackBtn">Go Back</button>
+    </div>
+</body>
+</html>
+
+@section Scripts {
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+
+        $(document).ready(function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const sessionId = urlParams.get("session_id");
+
+            function sessionData(inSessionId) {
+                this.SessionId = inSessionId;
+            }
+
+            $('#viewInvoiceBtn').on('click', function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    method: 'GET',
+                    url: `/API/Stripes/viewInvoice/${sessionId}`,
+                    dataType: 'json',
+                }).done(function (data) {
+                    window.open(window.location.url = data.urlLink, '_blank');
+                })
+            })
+
+            $('#billingBtn').on('click', function (e) {
+                e.preventDefault();
+
+                let sesData = new sessionData(sessionId);
+
+                $.ajax({
+                    method: 'POST',
+                    url: '/API/Stripes/customerPortal',
+                    dataType: 'json',
+                    data: sesData
+                }).done(function (data) {
+                    window.location.href = data.url
+                })
+            })
+
+            $('#goBackBtn').on('click', function (e) {
+                e.preventDefault();
+
+                window.location.href = 'https://localhost:44333/Stripe/Index';
+            })
+        })
+       
+    </script>
+
+}

@@ -1,0 +1,101 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <div class="row">
+        <div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Checkout</th>
+                    </tr>
+                </thead>
+                <tbody id="dataTableBody"></tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
+
+@section Scripts{
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+
+        $(document).ready(function () {
+
+            var stripe = Stripe('XXXX');
+
+            loadData();
+
+            function loadData() {
+                $.ajax({
+                    method: 'GET',
+                    url: "/API/Stripes/GetProductItems",
+                    dataType: 'json',
+                }).done(function (data) {
+                    renderData(data.items);
+                })
+            }
+
+            function renderData(items) {
+                $('#dataTableBody').html('');
+
+                for (var index = 0; index < items.length; index++) {
+                    let $cellElement = null;
+                    let item = items[index];
+                    let $rowElement = $('<tr></tr>');
+
+                    $cellElement = $(`<td>${item.name}</td>`);
+                    $rowElement.append($cellElement);
+
+                    $cellElement = $(`<td>${item.description}</td>`);
+                    $rowElement.append($cellElement);
+
+                    $cellElement = $(`<td>${item.price}</td>`);
+                    $rowElement.append($cellElement);
+
+                    $cellElement = $(`<td><button type="button" id="checkoutBtn" class="btn btn-primary" aria-pressed="true" data-id=${item.priceId}>Checkout</button></td>`);
+                    $rowElement.append($cellElement);
+
+                    $('#dataTableBody').append($rowElement);
+                }
+            }
+
+            function priceData(inPriceId) {
+                this.PriceId = inPriceId;
+            }
+
+            $('#dataTableBody').on('click', '#checkoutBtn', function (e) {
+                e.preventDefault();
+                var priceId = $(this).data('id');
+                let pData = new priceData(priceId);
+
+                $.ajax({
+                    method: 'POST',
+                    url: "/API/Stripes/checkoutSession",
+                    dataType: 'json',
+                    data: pData
+                }).done(function (data) {
+                    stripe.redirectToCheckout({
+                        sessionId: data.sessionId
+                    })
+                })
+            })
+
+            
+        })
+
+    </script>
+
+ }
