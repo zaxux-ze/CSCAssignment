@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 
 <html>
 <head>
@@ -7,21 +8,21 @@
 </head>
 <body>
     <div class="row">
-        <div class="col-lg-4">
-            <form id="dataForm">
-                <h3>Upload Image</h3>
-                <div class="form-group">
-                    <label>Upload your Image</label>
-                    <input class="form-control" type="file" id="fileInput" />
-                    <img id="showImg"/>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-default" id="uploadImageBtn">Upload</button>
-                </div>
-            </form>
-        </div>
-        <div class="col-lg-4">
-
+        <form id="dataForm">
+            <h3>Upload Image</h3>
+            <div class="form-group">
+                <label>Upload your Image</label>
+                <input class="form-control" type="file" id="fileInput" />
+                <img id="showImg" />
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default" id="uploadImageBtn">Upload</button>
+            </div>
+        </form>
+        <div class="row" id="showResult">
+            <h3>Results</h3>
+            <div id="tagResult"></div>
+            <div id="ocrResult"></div>
         </div>
     </div>
 </body>
@@ -29,7 +30,26 @@
 
 @section Scripts
 {
-    
+
+    <style>
+
+
+        #showResult {
+            float: right;
+            margin-right: 20em;
+        }
+
+        #dataForm {
+            float: left;
+        }
+
+        #showImg {
+            border: 0;
+            width: 20vw;
+            display: none;
+        }
+    </style>
+
     <script>
         $(document).ready(function () {
 
@@ -41,16 +61,39 @@
                         $('#showImg').attr('src', e.target.result);
                     }
 
-                    reader.readAsDataURL(input.files[0]); 
+                    reader.readAsDataURL(input.files[0]);
                 }
             }
 
             $("#fileInput").change(function () {
+                $('#showImg').show();
                 readURL(this);
             });
 
+            function renderTagData(inTagData) {
+                var $pElement;
+                $divElement = $('<div></div>', { id: 'tagResult' });
+                $('#showResult').append($divElement);
+
+                for (const [key, value] of Object.entries(inTagData)) {
+                    $pElement = $('<p></p>', { text: 'Tag Value: ' + key + ', Accuracy: ' + value });
+                    $('#tagResult').append($pElement);
+                }
+            }
+
+            function renderOcrData(inOCRData) {
+                var $pElement;
+                $divElement = $('<div></div>', { id: 'ocrResult' });
+                $('#showResult').append($divElement);
+
+                for (var index = 0; index < inOCRData.length; index++) {
+                    $pElement = $('<p></p>', { text: 'OCR Value: ' + inOCRData[index].text });
+                    $($divElement).append($pElement);
+                }
+            }
+
             $('#uploadImageBtn').on('click', function (e) {
-                e.preventDefault(); 
+                e.preventDefault();
 
                 let fileInput = document.getElementById("fileInput").files[0];
 
@@ -64,9 +107,29 @@
                     contentType: false,
                     data: formToPost
                 }).done(function (data) {
-                    console.log(data);
+                    var tagData = data.result.tagData.tagResult;
+                    var ocrData = data.result.ocrData.ocrData;
+                    console.log(document.getElementById('tagResult'));
+                    var tagResultElement = document.getElementById('tagResult');
+                    var ocrResultElement = document.getElementById('ocrResult');
+                    if (tagResultElement == null && ocrResultElement == null) {
+                        renderTagData(tagData);
+                        renderOcrData(ocrData);
+                    }
+
+                    else {
+                        document.getElementById("tagResult").remove();
+                        document.getElementById("ocrResult").remove();
+                        renderTagData(tagData);
+                        renderOcrData(ocrData);
+                    }
+
+                }).fail(function (data) {
+                    console.log(data.promise(data).responseJSON);
+                    var message = data.promise(data).responseJSON;
+                    alert(message);
                 })
-            }) 
+            })
 
         })
 

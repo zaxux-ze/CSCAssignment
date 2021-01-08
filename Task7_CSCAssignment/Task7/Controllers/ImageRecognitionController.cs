@@ -13,6 +13,7 @@ using Newtonsoft.Json.Linq;
 using System.Threading;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using System.Drawing;
 
 namespace Task7.Controllers
 {
@@ -52,7 +53,12 @@ namespace Task7.Controllers
                             });
 
                 byte[] file = await provider.Contents[0].ReadAsByteArrayAsync();
-                
+
+                if (!IsValidImage(file))
+                {
+                    return Request.CreateResponse(HttpStatusCode.UnsupportedMediaType, "Please upload a file!");
+                }
+
                 Stream fileStream = new MemoryStream(file);
 
                 Cloudinary cloudinary = authCloudinary();
@@ -73,6 +79,20 @@ namespace Task7.Controllers
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, e);
             }
 
+        }
+
+        public static bool IsValidImage(byte[] bytes)
+        {
+            try
+            {
+                using (MemoryStream ms = new MemoryStream(bytes))
+                    Image.FromStream(ms);
+            }
+            catch (ArgumentException)
+            {
+                return false;
+            }
+            return true;
         }
 
         public HttpResponseMessage removeImg(string publicId)
@@ -131,8 +151,7 @@ namespace Task7.Controllers
 
         public static async Task<object> AnalyzeImageUrl(ComputerVisionClient client, string imageUrl)
         {
-            List<string> name = new List<string>();
-            List<double> confidence = new List<double>();
+            Dictionary<string, double> tagResult = new Dictionary<string, double>();
 
             List<VisualFeatureTypes?> features = new List<VisualFeatureTypes?>()
             {
@@ -147,11 +166,10 @@ namespace Task7.Controllers
 
             foreach (var tag in results.Tags)
             {
-                name.Add(tag.Name);
-                confidence.Add(tag.Confidence);
+                tagResult.Add(tag.Name, tag.Confidence);
             }
 
-            return new { tag = name, accuracy = confidence };
+            return new { tagResult = tagResult };
         }
 
         public static async Task<object> ReadFileUrl(ComputerVisionClient client, string urlFile)
