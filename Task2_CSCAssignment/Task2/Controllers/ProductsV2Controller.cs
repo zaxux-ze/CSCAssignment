@@ -22,14 +22,14 @@ namespace Task2.Controllers
 
         [HttpGet]
         [Route("api/v2/products/{id:int:min(2)}", Name = "getProductById")]
-        public Product GetProduct(int id)
+        public HttpResponseMessage GetProduct(int id)
         {
             Product item = repository.Get(id);
             if (item == null)
             {
-                throw new HttpResponseException(HttpStatusCode.NotFound);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, "Item cannot be found");
             }
-            return item;
+            return Request.CreateResponse<Product>(HttpStatusCode.OK, item);
         }
 
         [HttpGet]
