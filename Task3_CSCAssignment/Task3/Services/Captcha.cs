@@ -15,7 +15,7 @@ namespace Task3.Services
         public bool VerifyResponse(string recaptchaString)
         {
             string requestUrl = "https://www.google.com/recaptcha/api/siteverify";
-            string recaptchaSecretKey = "6LfzfAQaAAAAAESKIl9iUWklLdBiYkIx_59hcH4r";
+            string recaptchaSecretKey = "XXXX";
 
             HttpWebRequest request = WebRequest.Create(requestUrl) as HttpWebRequest;
 

@@ -61,7 +61,7 @@
         self.errors.removeAll();
 
         grecaptcha.ready(function () {
-            grecaptcha.execute('6LfzfAQaAAAAAG1aYoqYh64VaUmAPMSwzU8WDYWa', { action: 'homepage' }).then(function (token) {
+            grecaptcha.execute('XXXX', { action: 'homepage' }).then(function (token) {
 
                 var data = {
                     Email: self.registerEmail(),
