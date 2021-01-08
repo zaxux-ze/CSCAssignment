@@ -60,20 +60,26 @@
         self.result('');
         self.errors.removeAll();
 
-        var data = {
-            Email: self.registerEmail(),
-            Password: self.registerPassword(),
-            ConfirmPassword: self.registerPassword2()
-        };
+        grecaptcha.ready(function () {
+            grecaptcha.execute('6LfzfAQaAAAAAG1aYoqYh64VaUmAPMSwzU8WDYWa', { action: 'homepage' }).then(function (token) {
 
-        $.ajax({
-            type: 'POST',
-            url: '/api/Account/Register',
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify(data)
-        }).done(function (data) {
-            self.result("Done!");
-        }).fail(showError);
+                var data = {
+                    Email: self.registerEmail(),
+                    Password: self.registerPassword(),
+                    ConfirmPassword: self.registerPassword2(),
+                    Captcha: token
+                };
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Account/Register',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data)
+                }).done(function (data) {
+                    self.result("Done!");
+                }).fail(showError);
+            });
+        })
     }
 
     self.login = function () {

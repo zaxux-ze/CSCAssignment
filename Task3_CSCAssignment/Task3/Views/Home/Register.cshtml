@@ -39,7 +39,7 @@
 
 @section Scripts
 {
-    <script src="https://www.google.com/recaptcha/api.js?render=XXXX"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfzfAQaAAAAAG1aYoqYh64VaUmAPMSwzU8WDYWa"></script>
     <script>
         $(document).ready(function () {
             
@@ -56,7 +56,7 @@
             $('#registerButton').on('click', function (e) {
                 e.preventDefault();
                 grecaptcha.ready(function () {
-                    grecaptcha.execute('XXXX', { action: 'homepage' }).then(function (token) {
+                    grecaptcha.execute('6LfzfAQaAAAAAG1aYoqYh64VaUmAPMSwzU8WDYWa', { action: 'homepage' }).then(function (token) {
                         document.getElementById("foo").value = token;
 
                         let email = $('#emailInput').val();
