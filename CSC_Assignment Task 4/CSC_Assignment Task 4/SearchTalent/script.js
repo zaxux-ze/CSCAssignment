@@ -1,7 +1,7 @@
 $('#search').keyup(function () {
     //get data from json file
     //var urlForJson = "data.json";
-   
+
 
     //get data from Restful web Service in development environment
     var urlForJson = "https://localhost:44337/api/talents";
@@ -13,7 +13,7 @@ $('#search').keyup(function () {
     var urlForCloudImage = "https://res.cloudinary.com/soweihao/image/upload/v1606996671/SearchTalent/";
     var searchField = $('#search').val();
 
-    if (searchField.match(/^([a-z\(\) ]+)$/i) || searchField=="") {
+    if (searchField.match(/^([a-z\(\) ]+)$/i) || searchField == "") {
         var myExp = new RegExp(searchField, "i");
         $.getJSON(urlForJson, function (data) {
             var output = '<ul class="searchresults">';
@@ -40,5 +40,5 @@ $('#search').keyup(function () {
     }
     else {
         $('#update').html('<p>Please enter only letters</p>');
-}
+    }
 });
