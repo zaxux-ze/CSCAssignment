@@ -14,7 +14,7 @@ namespace Task2.Controllers
         static readonly IProductRepository repository = new ProductRepository();
 
         [HttpGet]
-        [Route("api/v2/products")]
+        [Route("api/v2/products", Name = "getAllProducts")]
         public IEnumerable<Product> GetAllProducts()
         {
             return repository.GetAll();
